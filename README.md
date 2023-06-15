@@ -10,6 +10,10 @@ This script queries the [OpenCitations](https://opencitations.net/index/coci) AP
 - `plotly` library (for data visualization)
 - `rich` library (for console output formatting)
 
+For testing:
+
+- `requests_mock` library
+
 To install the required packages, run the following command in your terminal:
 ```
 pip install -r requirements.txt

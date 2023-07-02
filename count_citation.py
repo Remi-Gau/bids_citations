@@ -5,6 +5,8 @@ import pandas as pd
 import plotly.express as px
 from pathlib import Path
 
+DEBUG = True
+
 
 def load_dataframe_from_file(file_path: Path) -> pd.DataFrame:
     """
@@ -15,23 +17,59 @@ def load_dataframe_from_file(file_path: Path) -> pd.DataFrame:
     return pd.DataFrame()
 
 
+def return_citation_count_per_year(citations_doi: str) -> dict[str, int]:
+    if not citations_doi:
+        return {}
+    citation_count_per_year = {}
+    citations_doi = citations_doi.replace("; ", "__")
+    if metadata := query_for_metadata(citations_doi):
+        for citation in metadata:
+            year = citation["year"]
+            if year in citation_count_per_year:
+                citation_count_per_year[year] += 1
+            else:
+                citation_count_per_year[year] = 1
+    else:
+        citations_doi = citations_doi.split("__")
+        print(f"querying papers one by one: {citations_doi}")
+        for citation in citations_doi:
+            if metadata := query_for_metadata(citation):
+                year = metadata[0]["year"]
+                if year in citation_count_per_year:
+                    citation_count_per_year[year] += 1
+                else:
+                    citation_count_per_year[year] = 1
+    return citation_count_per_year
+
+
+def query_for_metadata(doi: str) -> dict[str, str]:
+    api_call = f"https://opencitations.net/index/coci/api/v1/metadata/{doi}"
+    r = requests.get(api_call)
+    if r.status_code == 200:
+        return r.json()
+    print(f"[red]Error: {r.status_code}[/red]")
+    return {}
+
+
 def query_api(papers: dict[str, str]) -> dict[str, list[str] | list[int]]:
     """
-    Use requests to query pubmed API to get papers that cited each paper listed above.
+    Use requests to query papers that cited each paper listed in dict.
     """
-    df = {"papers": [], "nb_citations": []}
-    http_headers = {"authorization": "YOUR-OPENCITATIONS-ACCESS-TOKEN"}
+    df = {"papers": [], "years": [], "nb_citations": []}
 
     for paper_ in papers:
-        print(paper_)
-        api_call = f"https://opencitations.net/index/coci/api/v1/references/{papers[paper_]}"
-        r = requests.get(api_call, headers=http_headers)
+        print(f"{paper_}")
+        if metadata := query_for_metadata(papers[paper_]):
+            print(metadata)
+            if citations := metadata[0]["citation"]:
+                citation_count_per_year = return_citation_count_per_year(citations)
+                print(citation_count_per_year)
+                for year in citation_count_per_year:
+                    df["papers"].append(paper_)
+                    df["years"].append(int(year))
+                    df["nb_citations"].append(citation_count_per_year[year])
 
-        if r.status_code == 200:
-            citing_papers = r.json()
-            df["papers"].append(paper_)
-            df["nb_citations"].append(len(citing_papers))
-
+    df = pd.DataFrame(df)
     return df
 
 
@@ -45,9 +83,16 @@ def save_dataframe_to_file(df: pd.DataFrame, file_path: Path):
 
 def plot_citation_count(df: pd.DataFrame):
     """
-    Use Plotly to create a bar chart of the citation count.
+    Use Plotly to create a bar chart of the citation count per year stacked by paper.
     """
-    fig = px.bar(df, x="papers", y="nb_citations", color="papers", title="foo")
+    fig = px.bar(
+        df,
+        x="years",
+        y="nb_citations",
+        color="papers",
+        title="Citation count per year",
+        labels={"years": "Year", "nb_citations": "Number of citations"},
+    )
     fig.show()
 
 
@@ -60,8 +105,8 @@ def main():
         "iEEG": "10.1038/s41597-019-0105-7",
         "MEG": "10.1038/sdata.2018.110",
         "PET": "10.1038/s41597-022-01164-1",
-        "Genetics": "10.1093/gigascience/giaa104",
         "Microscopy": "10.3389/fnins.2022.871228",
+        "Genetics": "10.1093/gigascience/giaa104",
         "qMRI": "10.1038/s41597-022-01571-4",
     }
 

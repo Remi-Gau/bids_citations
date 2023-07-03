@@ -70,16 +70,26 @@ Our list of contributors are captured in our
 We update the contributor appendix every specification release. As of July 2023,
 we have over 300 credited contributors.
 
-#### GitHub contributors
+## Contributors affiliations
 
-| repository        | stars                                                                                             |
-| ----------------- | ------------------------------------------------------------------------------------------------- |
-| bids-standard     | ![GitHub Repo stars](https://img.shields.io/github/contributors/bids-standard/bids-specification) |
-| bids-starter-kit  | ![GitHub Repo stars](https://img.shields.io/github/contributors/bids-standard/bids-starter-kit)   |
-| bids-validator    | ![GitHub Repo stars](https://img.shields.io/github/contributors/bids-standard/bids-validator)     |
-| pybids            | ![GitHub Repo stars](https://img.shields.io/github/contributors/bids-standard/pybids)             |
-| bids-matlab       | ![GitHub Repo stars](https://img.shields.io/github/contributors/bids-standard/bids-matlab)        |
-| statistical model | ![GitHub Repo stars](https://img.shields.io/github/contributors/bids-standard/stats-models)       |
+Number of known affiliations: 148
+
+Number of authors without affiliation: 171
+
+Number of unknwon affiliations: 95
+
+![](affiliations.png)
+
+#### Contributors
+
+| repository        | all-contributors                                                                                                                | github                                                                                            |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| bids-standard     |                                                                                                                                 | ![GitHub Repo stars](https://img.shields.io/github/contributors/bids-standard/bids-specification) |
+| bids-starter-kit  | ![GitHub contributors (via allcontributors.org)](https://img.shields.io/github/all-contributors/bids-standard/bids-starter-kit) | ![GitHub Repo stars](https://img.shields.io/github/contributors/bids-standard/bids-starter-kit)   |
+| bids-validator    | ![GitHub contributors (via allcontributors.org)](https://img.shields.io/github/all-contributors/bids-standard/bids-validator)   | ![GitHub Repo stars](https://img.shields.io/github/contributors/bids-standard/bids-validator)     |
+| pybids            |                                                                                                                                 | ![GitHub Repo stars](https://img.shields.io/github/contributors/bids-standard/pybids)             |
+| bids-matlab       | ![GitHub contributors (via allcontributors.org)](https://img.shields.io/github/all-contributors/bids-standard/bids-matlab)      | ![GitHub Repo stars](https://img.shields.io/github/contributors/bids-standard/bids-matlab)        |
+| statistical model |                                                                                                                                 | ![GitHub Repo stars](https://img.shields.io/github/contributors/bids-standard/stats-models)       |
 
 ### GitHub dependents
 
@@ -100,15 +110,21 @@ github-dependents-info --repo bids-standard/pybids --badgemarkdownfile ./dashboa
 ### Impact summary
 
 Since its origin, the BIDS has revolutionized the way in which neuroimaging
-research is done. BIDS has a community of 136 credited contributors (22 female,
-as of October 3, 2020), with ~10,000 users visiting the website, and ~7,000
-users exploring the BIDS Specification, over the past 6 months. Over 404 journal
-articles have cited BIDS or any of its extensions. Currently, 10
+research is done.
+
+BIDS has a community of over 300 credited contributors (??? female, as of YYYY
+MM DD), with ~??? users visiting the website, and ~??? users exploring the BIDS
+Specification, over the past ??? months.
+
+Over ??? journal articles have cited BIDS or any of its extensions.
+
+Currently, ???
 [reported](https://docs.google.com/spreadsheets/d/1aySjPpEGGQwFcOavkQdcvk2t2UMXt_zoTzWLWUmq20M/edit#gid=0)
 centers, institutes and databases around the world that have implemented BIDS as
-their organizational structure. As of July 1, 2020, we have 183 people signed up
-for our BIDS email list and 412 members on our google group.
+their organizational structure.
 
+As of July 1, 2023, we have ??? people signed up for our BIDS email list and ???
+members on our google group.
 
 ### Website and Specification traffic dashboards
 
@@ -126,7 +142,6 @@ The default time period is set to the past 6 months. This can be changed by
 adjusting the time period in the upper left corner. Please feel free to use any
 of these figures in your grant! If there are additional statistics not currently
 conveyed, please reach out to (???).
-
 
 ### BIDS usage
 
@@ -155,7 +170,10 @@ To find out about recent news and events, please visit our
 
 ## Future steps: TODO
 
-- [LATER PASS]Thought: add country of origin to contributor appendix
+- add country of origin to contributor appendix
+- nb of datasets (openneuro or else):
+  - where are they from
+  - gender of dataset authors
 - Enhance news and events when collaboration pillar is established
 - Sharing previous BIDS grants: when the organizational design is completed, we
   can establish a common area to place this information.

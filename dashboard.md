@@ -37,6 +37,11 @@ directly extend our support into a new domain, grants that help BIDS (e.g.
 OpenNeuro), or unsuccessful grant applications. For example, please find our
 [NIH-R24 Brain Initiative BIDS-Derivatives grant](https://osf.io/c3dgx/).
 
+
+A lsiting of the previous grants can be found here:
+
+https://bids.neuroimaging.io/acknowledgments.html
+
 ## dashboards
 
 ### Citation Count

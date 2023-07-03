@@ -85,9 +85,7 @@ def query_api(papers: dict[str, str]) -> dict[str, list[str] | list[int]]:
 
 
 def save_dataframe_to_file(df: pd.DataFrame, file_path: Path):
-    """
-    Save DataFrame to TSV if output file does not exist.
-    """
+    """Save DataFrame to TSV if output file does not exist."""
     if not df.empty and not file_path.exists():
         df.to_csv(file_path, sep="\t", index=False)
 

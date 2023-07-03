@@ -6,15 +6,16 @@
 - write to file
 - plot on map
 """
+from __future__ import annotations
 
+import re
+from pathlib import Path
 
-import ruamel.yaml
-from rich import print
-from geopy.geocoders import Nominatim
 import pandas as pd
 import plotly.express as px
-from pathlib import Path
-import re
+import ruamel.yaml
+from geopy.geocoders import Nominatim
+from rich import print
 
 
 def root_dir():
@@ -22,7 +23,7 @@ def root_dir():
 
 
 def main():
-    with open(root_dir() / "bids_spec_citation.cff", "r") as f:
+    with open(root_dir() / "bids_spec_citation.cff") as f:
         cff = ruamel.yaml.load(f, Loader=ruamel.yaml.RoundTripLoader)
 
     affiliations = [author["affiliation"] for author in cff["authors"] if "affiliation" in author]
@@ -65,6 +66,8 @@ def main():
     nb_countries = len(set(df["country"]))
     print(f"Number of countries: {nb_countries}")
     print(f"Number of authors without affiliation: {nb_without_affiliation}")
+    unknown_affiliations = df["address"].isna().sum()
+    print(f"Number of unknown affiliations: {unknown_affiliations}")
 
     planet_slider_fig = px.scatter_geo(
         df, lat=df.latitude, lon=df.longitude, hover_name="address", projection="natural earth"

@@ -1,5 +1,9 @@
+from __future__ import annotations
+
 import pytest
-from count_citation import load_dataframe_from_file, query_api
+
+from count_citation import load_dataframe_from_file
+from count_citation import query_api
 
 
 @pytest.fixture

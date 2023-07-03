@@ -1,11 +1,18 @@
 from __future__ import annotations
-import requests
-from rich import print
-import pandas as pd
-import plotly.express as px
+
 from pathlib import Path
 
+import pandas as pd
+import plotly.express as px
+import requests
+from pyzotero import zotero
+from rich import print
+
 DEBUG = True
+
+
+# requires token from https://opencitations.net/index/coci/api/v1/token
+# saved in token.txt
 
 
 def load_dataframe_from_file(file_path: Path) -> pd.DataFrame:
@@ -31,8 +38,9 @@ def return_citation_count_per_year(citations_doi: str) -> dict[str, int]:
                 citation_count_per_year[year] = 1
     else:
         citations_doi = citations_doi.split("__")
-        print(f"querying papers one by one: {citations_doi}")
+        print(f" querying papers one by one: {citations_doi}")
         for citation in citations_doi:
+            print(f"  querying: {citation}")
             if metadata := query_for_metadata(citation):
                 year = metadata[0]["year"]
                 if year in citation_count_per_year:
@@ -43,8 +51,11 @@ def return_citation_count_per_year(citations_doi: str) -> dict[str, int]:
 
 
 def query_for_metadata(doi: str) -> dict[str, str]:
+    with open("token.txt") as f:
+        token = f.read().strip()
+    headers = {"authorization": token}
     api_call = f"https://opencitations.net/index/coci/api/v1/metadata/{doi}"
-    r = requests.get(api_call)
+    r = requests.get(api_call, headers=headers)
     if r.status_code == 200:
         return r.json()
     print(f"[red]Error: {r.status_code}[/red]")
@@ -58,12 +69,12 @@ def query_api(papers: dict[str, str]) -> dict[str, list[str] | list[int]]:
     df = {"papers": [], "years": [], "nb_citations": []}
 
     for paper_ in papers:
-        print(f"{paper_}")
+        print(f" {paper_}")
         if metadata := query_for_metadata(papers[paper_]):
             print(metadata)
             if citations := metadata[0]["citation"]:
                 citation_count_per_year = return_citation_count_per_year(citations)
-                print(citation_count_per_year)
+                print(f" {citation_count_per_year}")
                 for year in citation_count_per_year:
                     df["papers"].append(paper_)
                     df["years"].append(int(year))
@@ -97,18 +108,13 @@ def plot_citation_count(df: pd.DataFrame):
 
 
 def main():
-    # List dois for BIDS papers
-    papers = {
-        "bids": "10.1038/sdata.2016.44",
-        "bids-app": "10.1371/journal.pcbi.1005209",
-        "EEG": "10.1038/s41597-019-0104-8",
-        "iEEG": "10.1038/s41597-019-0105-7",
-        "MEG": "10.1038/sdata.2018.110",
-        "PET": "10.1038/s41597-022-01164-1",
-        "Microscopy": "10.3389/fnins.2022.871228",
-        "Genetics": "10.1093/gigascience/giaa104",
-        "qMRI": "10.1038/s41597-022-01571-4",
-    }
+    # List dois for BIDS papers from zotero group
+    zot = zotero.Zotero(library_id="5111637", library_type="group")
+    items = zot.everything(zot.top())
+    papers = {}
+    for item in items:
+        title = item["data"].get("shortTitle") or item["data"].get("title")
+        papers[title] = item["data"]["DOI"]
 
     output_file = Path().cwd() / "count_citation.tsv"
 

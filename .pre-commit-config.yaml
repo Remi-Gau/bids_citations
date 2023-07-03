@@ -1,10 +1,43 @@
+---
 repos:
-  - repo: https://github.com/psf/black
-    rev: "22.12.0"
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
     hooks:
-      - id: black
+    -   id: end-of-file-fixer
+    -   id: check-added-large-files
+    -   id: check-case-conflict
+    -   id: check-json
+    -   id: check-merge-conflict
+    -   id: check-yaml
+    -   id: debug-statements
+    -   id: trailing-whitespace
+-   repo: https://github.com/psf/black
+    rev: 22.12.0
+    hooks:
+    -   id: black
 
-  - repo: https://github.com/pycqa/flake8
-    rev: "6.0.0"
+-   repo: https://github.com/asottile/reorder-python-imports
+    rev: v3.9.0
     hooks:
-      - id: flake8
+    -   id: reorder-python-imports
+        args: [--py37-plus, --add-import, from __future__ import annotations]
+
+
+
+
+-   repo: https://github.com/jumanjihouse/pre-commit-hook-yamlfmt
+    rev: 0.2.3
+    hooks:
+    -   id: yamlfmt
+        args: [--mapping, '4', --sequence, '4', --offset, '0']
+
+-   repo: https://github.com/asottile/pyupgrade
+    rev: v3.4.0
+    hooks:
+    -   id: pyupgrade
+        args: [--py38-plus]
+
+-   repo: https://github.com/pycqa/flake8
+    rev: 6.0.0
+    hooks:
+    -   id: flake8

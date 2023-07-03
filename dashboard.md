@@ -41,6 +41,12 @@ OpenNeuro), or unsuccessful grant applications. For example, please find our
 
 ### Citation Count
 
+BIDS references are centralized in a zotero group:
+https://www.zotero.org/groups/5111637/bids
+
+You can also find them on this page:
+https://bids-specification.readthedocs.io/en/latest/introduction.html#citing-bids
+
 ![](newplot.png)
 
 ### GitHub stars
@@ -70,18 +76,6 @@ Our list of contributors are captured in our
 We update the contributor appendix every specification release. As of July 2023,
 we have over 300 credited contributors.
 
-## Contributors affiliations
-
-Number of known affiliations: 148
-
-Number of authors without affiliation: 171
-
-Number of unknwon affiliations: 95
-
-![](affiliations.png)
-
-#### Contributors
-
 | repository        | all-contributors                                                                                                                | github                                                                                            |
 | ----------------- | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
 | bids-standard     |                                                                                                                                 | ![GitHub Repo stars](https://img.shields.io/github/contributors/bids-standard/bids-specification) |
@@ -90,6 +84,26 @@ Number of unknwon affiliations: 95
 | pybids            |                                                                                                                                 | ![GitHub Repo stars](https://img.shields.io/github/contributors/bids-standard/pybids)             |
 | bids-matlab       | ![GitHub contributors (via allcontributors.org)](https://img.shields.io/github/all-contributors/bids-standard/bids-matlab)      | ![GitHub Repo stars](https://img.shields.io/github/contributors/bids-standard/bids-matlab)        |
 | statistical model |                                                                                                                                 | ![GitHub Repo stars](https://img.shields.io/github/contributors/bids-standard/stats-models)       |
+
+#### Gender of contributors
+
+Guessed with: https://pypi.org/project/gender-guesser/
+
+- male: 175
+- female: 45
+- andy: 6
+- unknown: 79
+- mostly_male: 12
+- mostly_female: 2
+#### Contributors affiliations
+
+Number of known affiliations: 148
+
+Number of authors without affiliation: 171
+
+Number of unknwon affiliations: 19
+
+![](affiliations.png)
 
 ### GitHub dependents
 
@@ -156,6 +170,32 @@ that is crowdsourcing imaging centers, institutes, databases around the world
 that have implemented BIDS as their organizational structure.
 
 ### Neurostars
+
+| tag                | nb topics | nb posts | topics with no reply | topics with answer |
+| :----------------- | --------: | -------: | -------------------: | -----------------: |
+| bids               |       602 |     2918 |                   91 |                167 |
+| bids-specification |         5 |       22 |                    0 |                  4 |
+| bids-validator     |        69 |      414 |                    1 |                 23 |
+| bids-app           |        18 |       99 |                    2 |                  9 |
+| bidskit            |         4 |       11 |                    2 |                  0 |
+| pybids             |        23 |      132 |                    3 |                 10 |
+| bidsonym           |         1 |        1 |                    1 |                  0 |
+| dcm2bids           |        54 |      276 |                    2 |                 25 |
+| heudiconv          |        77 |      349 |                   12 |                 16 |
+| mriqc              |       127 |      547 |                   28 |                 34 |
+| fmriprep-report    |         8 |       37 |                    0 |                  2 |
+| fmriprep           |       530 |     2792 |                   81 |                145 |
+| dmriprep           |         8 |       13 |                    5 |                  0 |
+| qsiprep            |        86 |      525 |                    7 |                 31 |
+| aslprep            |         7 |       29 |                    1 |                  3 |
+| smriprep           |         2 |        7 |                    0 |                  0 |
+| dtiprep            |         1 |        7 |                    0 |                  1 |
+| nipreps            |         6 |       26 |                    3 |                  2 |
+| niprep             |         1 |        1 |                    1 |                  0 |
+| nilearn            |       474 |     2024 |                   69 |                137 |
+| fitlins            |        15 |       79 |                    2 |                  4 |
+| openneuro          |        79 |      423 |                   10 |                 22 |
+| openneuro-cli      |         1 |        2 |                    0 |                  0 |
 
 ### Mailing list volume
 

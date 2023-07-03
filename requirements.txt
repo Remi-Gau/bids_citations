@@ -4,3 +4,4 @@ plotly>=5.3.1
 rich>=10.9.0
 requests_mock
 ruamel.yaml
+pyzotero

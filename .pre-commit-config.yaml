@@ -11,8 +11,9 @@ repos:
     -   id: check-yaml
     -   id: debug-statements
     -   id: trailing-whitespace
+
 -   repo: https://github.com/psf/black
-    rev: 23.11.0
+    rev: 23.12.0
     hooks:
     -   id: black
 
@@ -21,9 +22,6 @@ repos:
     hooks:
     -   id: reorder-python-imports
         args: [--py37-plus, --add-import, from __future__ import annotations]
-
-
-
 
 -   repo: https://github.com/jumanjihouse/pre-commit-hook-yamlfmt
     rev: 0.2.3

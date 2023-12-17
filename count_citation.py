@@ -80,8 +80,7 @@ def query_api(papers: dict[str, str]) -> dict[str, list[str] | list[int]]:
                     df["years"].append(int(year))
                     df["nb_citations"].append(citation_count_per_year[year])
 
-    df = pd.DataFrame(df)
-    return df
+    return pd.DataFrame(df)
 
 
 def save_dataframe_to_file(df: pd.DataFrame, file_path: Path):

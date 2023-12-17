@@ -5,3 +5,4 @@ rich>=10.9.0
 requests_mock
 ruamel.yaml
 pyzotero
+gender_guesser

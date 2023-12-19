@@ -32,6 +32,8 @@ def return_citation_count_per_year(citations_doi: str) -> dict[str, int]:
     if metadata := query_for_metadata(citations_doi):
         for citation in metadata:
             year = citation["year"]
+            if "-" in year:
+                year = year.split("-")[0]
             if year in citation_count_per_year:
                 citation_count_per_year[year] += 1
             else:
@@ -74,7 +76,7 @@ def query_api(papers: dict[str, str]) -> dict[str, list[str] | list[int]]:
             print(metadata)
             if citations := metadata[0]["citation"]:
                 citation_count_per_year = return_citation_count_per_year(citations)
-                print(f" {citation_count_per_year}")
+                print(f" citation per year: {citation_count_per_year}")
                 for year in citation_count_per_year:
                     df["papers"].append(paper_)
                     df["years"].append(int(year))
@@ -110,8 +112,16 @@ def main():
     items = zot.everything(zot.top())
     papers = {}
     for item in items:
+        print(item)
         title = item["data"].get("shortTitle") or item["data"].get("title")
-        papers[title] = item["data"]["DOI"]
+
+        DOI = item["data"].get("DOI")
+        if not DOI:
+            if extra := item["data"].get("extra"):
+                DOI = extra.replace("DOI: ", "")
+
+        if DOI:
+            papers[title] = DOI
 
     output_file = Path().cwd() / "count_citation.tsv"
 

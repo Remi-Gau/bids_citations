@@ -40,7 +40,7 @@ OpenNeuro), or unsuccessful grant applications. For example, please find our
 [NIH-R24 Brain Initiative BIDS-Derivatives grant](https://osf.io/c3dgx/).
 
 
-A lsiting of the previous grants can be found here:
+A listing of the previous grants can be found here:
 
 https://bids.neuroimaging.io/acknowledgments.html
 
@@ -104,13 +104,14 @@ Guessed with: https://pypi.org/project/gender-guesser/
 - unknown: 79
 - mostly_male: 12
 - mostly_female: 2
+
 #### Contributors affiliations
 
 Number of known affiliations: 148
 
 Number of authors without affiliation: 171
 
-Number of unknwon affiliations: 19
+Number of unkwon affiliations: 19
 
 ![](affiliations.png)
 

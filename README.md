@@ -1,6 +1,7 @@
 # BIDS grant writing kit
 
-Adapted and extended from [this google doc](https://docs.google.com/document/d/1Q7JTOvUqt05YQfnbvGoP1SZQy_CGkNEVcsVZeS4D5_o).
+Adapted and extended from
+[this google doc](https://docs.google.com/document/d/1Q7JTOvUqt05YQfnbvGoP1SZQy_CGkNEVcsVZeS4D5_o).
 
 This document intends to convey how the BIDS Steering and Maintainers Group can
 support your proposed BIDS grant. In an effort to express the impact of BIDS in
@@ -39,7 +40,6 @@ directly extend our support into a new domain, grants that help BIDS (e.g.
 OpenNeuro), or unsuccessful grant applications. For example, please find our
 [NIH-R24 Brain Initiative BIDS-Derivatives grant](https://osf.io/c3dgx/).
 
-
 A listing of the previous grants can be found here:
 
 https://bids.neuroimaging.io/acknowledgments.html
@@ -56,6 +56,15 @@ https://bids-specification.readthedocs.io/en/latest/introduction.html#citing-bid
 
 ![](newplot.png)
 
+#### Citation according to google scholar
+
+<!--
+original
+https://docs.google.com/spreadsheets/d/1rz3mQl5qvYBVvqJlWhSg1c9qS09ayG8GmyOqS8JZxWc/edit#gid=0
+
+updated tsv in this folder
+-->
+
 ### GitHub stars
 
 | repository        | stars                                                                                      |
@@ -66,6 +75,9 @@ https://bids-specification.readthedocs.io/en/latest/introduction.html#citing-bid
 | pybids            | ![GitHub Repo stars](https://img.shields.io/github/stars/bids-standard/pybids)             |
 | bids-matlab       | ![GitHub Repo stars](https://img.shields.io/github/stars/bids-standard/bids-matlab)        |
 | statistical model | ![GitHub Repo stars](https://img.shields.io/github/stars/bids-standard/stats-models)       |
+| fmriprep          | ![GitHub Repo stars](https://img.shields.io/github/stars/nipreps/fmriprep)                 |
+| mriqc             | ![GitHub Repo stars](https://img.shields.io/github/stars/nipreps/mriqc)                    |
+| qsiprep           | ![GitHub Repo stars](https://img.shields.io/github/stars/PennLINC/qsiprep)                 |
 
 ### Downloads
 
@@ -76,23 +88,23 @@ https://bids-specification.readthedocs.io/en/latest/introduction.html#citing-bid
 | bids-schema       | ![PyPI - Downloads](https://img.shields.io/pypi/dm/bidsschematools)                                                      |
 | statistical model | ![PyPI - Downloads](https://img.shields.io/pypi/dm/bsmschema)                                                            |
 
-### Contributors
+For the number of docker pulls of the BIDS apps, please check the [BIDS app dashboard](https://bids-apps.neuroimaging.io/apps/).
 
-![PyPI - Downloads](https://img.shields.io/pypi/dm/nilearn)
+### Contributors
 
 Our list of contributors are captured in our
 [contributor appendix](https://bids-specification.readthedocs.io/en/latest/99-appendices/01-contributors.html).
 We update the contributor appendix every specification release. As of July 2023,
 we have over 300 credited contributors.
 
-| repository        | all-contributors                                                                                                                | github                                                                                            |
-| ----------------- | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| bids-standard     |                                                                                                                                 | ![GitHub Repo stars](https://img.shields.io/github/contributors/bids-standard/bids-specification) |
-| bids-starter-kit  | ![GitHub contributors (via allcontributors.org)](https://img.shields.io/github/all-contributors/bids-standard/bids-starter-kit) | ![GitHub Repo stars](https://img.shields.io/github/contributors/bids-standard/bids-starter-kit)   |
-| bids-validator    | ![GitHub contributors (via allcontributors.org)](https://img.shields.io/github/all-contributors/bids-standard/bids-validator)   | ![GitHub Repo stars](https://img.shields.io/github/contributors/bids-standard/bids-validator)     |
-| pybids            |                                                                                                                                 | ![GitHub Repo stars](https://img.shields.io/github/contributors/bids-standard/pybids)             |
-| bids-matlab       | ![GitHub contributors (via allcontributors.org)](https://img.shields.io/github/all-contributors/bids-standard/bids-matlab)      | ![GitHub Repo stars](https://img.shields.io/github/contributors/bids-standard/bids-matlab)        |
-| statistical model |                                                                                                                                 | ![GitHub Repo stars](https://img.shields.io/github/contributors/bids-standard/stats-models)       |
+| repository        | all-contributors                                                                                                                  | github                                                                                            |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| bids-standard     | ![GitHub contributors (via allcontributors.org)](https://img.shields.io/github/all-contributors/bids-standard/bids-specification) | ![GitHub Repo stars](https://img.shields.io/github/contributors/bids-standard/bids-specification) |
+| bids-starter-kit  | ![GitHub contributors (via allcontributors.org)](https://img.shields.io/github/all-contributors/bids-standard/bids-starter-kit)   | ![GitHub Repo stars](https://img.shields.io/github/contributors/bids-standard/bids-starter-kit)   |
+| bids-validator    | ![GitHub contributors (via allcontributors.org)](https://img.shields.io/github/all-contributors/bids-standard/bids-validator)     | ![GitHub Repo stars](https://img.shields.io/github/contributors/bids-standard/bids-validator)     |
+| pybids            |                                                                                                                                   | ![GitHub Repo stars](https://img.shields.io/github/contributors/bids-standard/pybids)             |
+| bids-matlab       | ![GitHub contributors (via allcontributors.org)](https://img.shields.io/github/all-contributors/bids-standard/bids-matlab)        | ![GitHub Repo stars](https://img.shields.io/github/contributors/bids-standard/bids-matlab)        |
+| statistical model |                                                                                                                                   | ![GitHub Repo stars](https://img.shields.io/github/contributors/bids-standard/stats-models)       |
 
 #### Gender of contributors
 
@@ -118,16 +130,19 @@ Number of unkwon affiliations: 19
 ### GitHub dependents
 
 <!--
+TODO add automation to update regularly.
+
 pip install -U github-dependents-info
 github-dependents-info --repo bids-standard/pybids --badgemarkdownfile ./dashboard.md
 -->
 
 <!-- gh-dependents-info-used-by-start -->
+
 <!-- gh-dependents-info-used-by-end -->
 
 | repository | dependents                                                                                                                                                        |
 | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| pybids     | [![](https://img.shields.io/static/v1?label=Used%20by&message=532&color=informational&logo=slickpic)](https://github.com/bids-standard/pybids/network/dependents) |
+| pybids     | [![](https://img.shields.io/static/v1?label=Used%20by&message=596&color=informational&logo=slickpic)](https://github.com/bids-standard/pybids/network/dependents) |
 
 ## Measuring BIDS Impact
 
@@ -136,24 +151,18 @@ github-dependents-info --repo bids-standard/pybids --badgemarkdownfile ./dashboa
 Since its origin, the BIDS has revolutionized the way in which neuroimaging
 research is done.
 
-BIDS has a community of over 300 credited contributors (??? female, as of YYYY
-MM DD), with ~??? users visiting the website, and ~??? users exploring the BIDS
+~??? users visiting the website, and ~??? users exploring the BIDS
 Specification, over the past ??? months.
-
-Over ??? journal articles have cited BIDS or any of its extensions.
 
 Currently, ???
 [reported](https://docs.google.com/spreadsheets/d/1aySjPpEGGQwFcOavkQdcvk2t2UMXt_zoTzWLWUmq20M/edit#gid=0)
 centers, institutes and databases around the world that have implemented BIDS as
 their organizational structure.
 
-As of July 1, 2023, we have ??? people signed up for our BIDS email list and ???
-members on our google group.
-
 ### Website and Specification traffic dashboards
 
-In order to measure the volume of traffic to
-our[ website](https://bids.neuroimaging.io/) and the
+In order to measure the volume of traffic to our
+[website](https://bids.neuroimaging.io/) and the
 [ReadTheDocs rendering of the specification](https://bids-specification.readthedocs.io/en/stable/),
 we utilize Google Analytics.
 
@@ -180,6 +189,10 @@ that is crowdsourcing imaging centers, institutes, databases around the world
 that have implemented BIDS as their organizational structure.
 
 ### Neurostars
+
+<!--
+TODO add automation to update every 6 months
+-->
 
 | tag                | nb topics | nb posts | topics with no reply | topics with answer |
 | :----------------- | --------: | -------: | -------------------: | -----------------: |
@@ -218,6 +231,7 @@ As of July 1, 2020, we have 183 people signed up for our
 To find out about recent news and events, please visit our
 [news section](https://bids.neuroimaging.io/news.html) on the website.
 
+<!--
 ## Future steps: TODO
 
 - add country of origin to contributor appendix
@@ -227,3 +241,4 @@ To find out about recent news and events, please visit our
 - Enhance news and events when collaboration pillar is established
 - Sharing previous BIDS grants: when the organizational design is completed, we
   can establish a common area to place this information.
+-->

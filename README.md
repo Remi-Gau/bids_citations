@@ -54,7 +54,7 @@ https://www.zotero.org/groups/5111637/bids
 You can also find them on this page:
 https://bids-specification.readthedocs.io/en/latest/introduction.html#citing-bids
 
-![](newplot.png)
+![](./images/newplot.png)
 
 #### Citation according to google scholar
 
@@ -110,11 +110,11 @@ we have over 300 credited contributors.
 
 Guessed with: https://pypi.org/project/gender-guesser/
 
-- male: 175
-- female: 45
+- male: 177
+- female: 47
 - andy: 6
-- unknown: 79
-- mostly_male: 12
+- unknown: 80
+- mostly_male: 13
 - mostly_female: 2
 
 #### Contributors affiliations
@@ -125,7 +125,7 @@ Number of authors without affiliation: 171
 
 Number of unkwon affiliations: 19
 
-![](affiliations.png)
+![](./images/affiliations.png)
 
 ### GitHub dependents
 

@@ -8,6 +8,8 @@ import requests
 from pyzotero import zotero
 from rich import print
 
+from .utils import data_dir
+
 DEBUG = True
 
 
@@ -123,7 +125,7 @@ def main():
         if DOI:
             papers[title] = DOI
 
-    output_file = Path().cwd() / "count_citation.tsv"
+    output_file = data_dir() / "count_citation.tsv"
 
     df = load_dataframe_from_file(output_file)
 

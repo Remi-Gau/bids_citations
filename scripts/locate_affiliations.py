@@ -9,7 +9,6 @@
 from __future__ import annotations
 
 import re
-from pathlib import Path
 
 import pandas as pd
 import plotly.express as px
@@ -17,19 +16,19 @@ import ruamel.yaml
 from geopy.geocoders import Nominatim
 from rich import print
 
-
-def root_dir():
-    return Path(__file__).parent.resolve()
+from .utils import bids_spec_dir
+from .utils import data_dir
 
 
 def main():
-    with open(root_dir() / "bids_spec_citation.cff") as f:
+    with open(bids_spec_dir() / "CITATION.cff") as f:
         cff = ruamel.yaml.load(f, Loader=ruamel.yaml.RoundTripLoader)
 
     affiliations = [author["affiliation"] for author in cff["authors"] if "affiliation" in author]
 
-    if Path("affiliations.tsv").exists():
-        df = pd.read_csv("affiliations.tsv", sep="\t")
+    output_file = data_dir() / "affiliations.tsv"
+    if output_file.exists():
+        df = pd.read_csv(output_file, sep="\t")
 
     else:
         columns = ["address", "city", "country", "longitude", "latitude"]
@@ -59,7 +58,7 @@ def main():
             df["latitude"].append(location.latitude)
 
         df = pd.DataFrame(df)
-        df.to_csv("affiliations.tsv", index=False, sep="\t")
+        df.to_csv(output_file, index=False, sep="\t")
 
     print(f"Number of affiliations: {len(affiliations)}")
     nb_without_affiliation = sum("affiliation" not in author for author in cff["authors"])

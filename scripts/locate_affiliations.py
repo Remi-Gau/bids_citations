@@ -15,9 +15,9 @@ import plotly.express as px
 import ruamel.yaml
 from geopy.geocoders import Nominatim
 from rich import print
-
-from .utils import bids_spec_dir
-from .utils import data_dir
+from utils import bids_spec_dir
+from utils import data_dir
+from utils import figures_dir
 
 
 def main():
@@ -71,7 +71,9 @@ def main():
     planet_slider_fig = px.scatter_geo(
         df, lat=df.latitude, lon=df.longitude, hover_name="address", projection="natural earth"
     )
-    planet_slider_fig.write_image("affiliations.png", width=800, height=400, scale=2)
+    planet_slider_fig.write_image(
+        figures_dir() / "affiliations.png", width=800, height=400, scale=2
+    )
 
 
 def get_location(geolocator, affiliation):

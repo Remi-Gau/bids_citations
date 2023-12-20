@@ -13,3 +13,7 @@ def bids_spec_dir():
 
 def data_dir():
     return root_dir() / "data"
+
+
+def figures_dir():
+    return root_dir() / "images"

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 import pandas as pd
@@ -7,14 +8,48 @@ import plotly.express as px
 import requests
 from pyzotero import zotero
 from rich import print
+from utils import data_dir
 
-from .utils import data_dir
-
-DEBUG = True
-
+DEBUG = False
+VERBOSE = False
+MINIMUM_YEAR = 2016
 
 # requires token from https://opencitations.net/index/coci/api/v1/token
 # saved in token.txt
+
+
+def main():
+    # List dois for BIDS papers from zotero group
+    zot = zotero.Zotero(library_id="5111637", library_type="group")
+    items = zot.everything(zot.top())
+    with open(data_dir() / "papers.json", "w") as f:
+        json.dump(items, f, indent=" ")
+
+    papers = {}
+    for item in items:
+        if VERBOSE:
+            print(item)
+        title = item["data"].get("shortTitle") or item["data"].get("title")
+
+        DOI = item["data"].get("DOI")
+        if not DOI:
+            if extra := item["data"].get("extra"):
+                DOI = extra.replace("DOI: ", "")
+
+        if DOI:
+            papers[title] = DOI
+
+    print(papers)
+
+    output_file = data_dir() / "count_citation.tsv"
+
+    df = load_dataframe_from_file(output_file)
+
+    if df.empty:
+        df = query_api(papers)
+        save_dataframe_to_file(df, output_file)
+
+    plot_citation_count(df)
 
 
 def load_dataframe_from_file(file_path: Path) -> pd.DataFrame:
@@ -31,11 +66,14 @@ def return_citation_count_per_year(citations_doi: str) -> dict[str, int]:
         return {}
     citation_count_per_year = {}
     citations_doi = citations_doi.replace("; ", "__")
+    print(f"Trying querying all citing papers at once: {citations_doi}")
     if metadata := query_for_metadata(citations_doi):
         for citation in metadata:
             year = citation["year"]
             if "-" in year:
                 year = year.split("-")[0]
+            if int(year) < MINIMUM_YEAR:
+                continue
             if year in citation_count_per_year:
                 citation_count_per_year[year] += 1
             else:
@@ -44,9 +82,12 @@ def return_citation_count_per_year(citations_doi: str) -> dict[str, int]:
         citations_doi = citations_doi.split("__")
         print(f" querying papers one by one: {citations_doi}")
         for citation in citations_doi:
-            print(f"  querying: {citation}")
+            if VERBOSE:
+                print(f"  querying: {citation}")
             if metadata := query_for_metadata(citation):
-                year = metadata[0]["year"]
+                year = metadata[0]["year"].split("-")[0]
+                if int(year) < MINIMUM_YEAR:
+                    continue
                 if year in citation_count_per_year:
                     citation_count_per_year[year] += 1
                 else:
@@ -72,7 +113,9 @@ def query_api(papers: dict[str, str]) -> dict[str, list[str] | list[int]]:
     """
     df = {"papers": [], "years": [], "nb_citations": []}
 
-    for paper_ in papers:
+    for i, paper_ in enumerate(papers):
+        if i > 4 and DEBUG:
+            break
         print(f" {paper_}")
         if metadata := query_for_metadata(papers[paper_]):
             print(metadata)
@@ -106,34 +149,6 @@ def plot_citation_count(df: pd.DataFrame):
         labels={"years": "Year", "nb_citations": "Number of citations"},
     )
     fig.show()
-
-
-def main():
-    # List dois for BIDS papers from zotero group
-    zot = zotero.Zotero(library_id="5111637", library_type="group")
-    items = zot.everything(zot.top())
-    papers = {}
-    for item in items:
-        print(item)
-        title = item["data"].get("shortTitle") or item["data"].get("title")
-
-        DOI = item["data"].get("DOI")
-        if not DOI:
-            if extra := item["data"].get("extra"):
-                DOI = extra.replace("DOI: ", "")
-
-        if DOI:
-            papers[title] = DOI
-
-    output_file = data_dir() / "count_citation.tsv"
-
-    df = load_dataframe_from_file(output_file)
-
-    if df.empty:
-        df = query_api(papers)
-        save_dataframe_to_file(df, output_file)
-
-    plot_citation_count(df)
 
 
 if __name__ == "__main__":

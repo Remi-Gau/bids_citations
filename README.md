@@ -65,6 +65,8 @@ https://docs.google.com/spreadsheets/d/1rz3mQl5qvYBVvqJlWhSg1c9qS09ayG8GmyOqS8JZ
 updated tsv in this folder
 -->
 
+![](./images/google_citations.png)
+
 ### GitHub stars
 
 | repository        | stars                                                                                      |
@@ -88,7 +90,8 @@ updated tsv in this folder
 | bids-schema       | ![PyPI - Downloads](https://img.shields.io/pypi/dm/bidsschematools)                                                      |
 | statistical model | ![PyPI - Downloads](https://img.shields.io/pypi/dm/bsmschema)                                                            |
 
-For the number of docker pulls of the BIDS apps, please check the [BIDS app dashboard](https://bids-apps.neuroimaging.io/apps/).
+For the number of docker pulls of the BIDS apps, please check the
+[BIDS app dashboard](https://bids-apps.neuroimaging.io/apps/).
 
 ### Contributors
 

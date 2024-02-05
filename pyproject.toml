@@ -1,6 +1,5 @@
 [tool.black]
 line-length = 100
-safe = true
 
 [tool.codespell]
 skip = "./.git,.mypy_cache,env,venv,data/affiliations.tsv"

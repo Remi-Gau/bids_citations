@@ -2,8 +2,7 @@ from __future__ import annotations
 
 import pytest
 
-from scripts.count_citation import load_dataframe_from_file
-from scripts.count_citation import query_api
+from scripts.count_citation import load_dataframe_from_file, query_api
 
 
 @pytest.fixture

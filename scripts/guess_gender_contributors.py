@@ -2,12 +2,12 @@
 
 Use the bids specification citation.cff file as input.
 """
+
 from __future__ import annotations
 
 import gender_guesser.detector as gender
 import ruamel.yaml
 from utils import bids_spec_dir
-
 
 with open(bids_spec_dir() / "CITATION.cff") as f:
     cff = ruamel.yaml.load(f, Loader=ruamel.yaml.RoundTripLoader)

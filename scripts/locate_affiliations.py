@@ -6,6 +6,7 @@
 - write to file
 - plot on map
 """
+
 from __future__ import annotations
 
 import re
@@ -15,9 +16,7 @@ import plotly.express as px
 import ruamel.yaml
 from geopy.geocoders import Nominatim
 from rich import print
-from utils import bids_spec_dir
-from utils import data_dir
-from utils import figures_dir
+from utils import bids_spec_dir, data_dir, figures_dir
 
 
 def main():

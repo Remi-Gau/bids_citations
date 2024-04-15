@@ -46,6 +46,10 @@ https://bids.neuroimaging.io/acknowledgments.html
 
 ## dashboards
 
+### Datasets
+
+![](./images/openneuro_data_growth.png)
+
 ### Citation Count
 
 BIDS references are centralized in a zotero group:

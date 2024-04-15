@@ -6,14 +6,22 @@
 #
 #
 
+import json
 import os
 from collections import defaultdict
 from datetime import datetime
+from pathlib import Path
 
-import matplotlib.pyplot as plt
 import pandas as pd
+import plotly.graph_objs as go
 import requests
-import seaborn as sns
+from plotly.subplots import make_subplots
+from rich import print
+
+UPDATE = False
+
+TMP_DIR = Path(__file__).parent / "tmp"
+TMP_DIR.mkdir(parents=True, exist_ok=True)
 
 scan_dict = {
     "anatomical": "anat",
@@ -134,12 +142,13 @@ def format_modalities(all_modalities):
 
 
 def format_ages(raw_age_list):
-    formatted_list = []
     if raw_age_list:
         age_list = sorted([x["age"] for x in raw_age_list if x["age"]])
-        for key, value in age_dict.items():
-            if any(x for x in age_list if x >= key[0] and x <= key[1]):
-                formatted_list.append(value)
+        formatted_list = [
+            value
+            for key, value in age_dict.items()
+            if any(x for x in age_list if x >= key[0] and x <= key[1])
+        ]
         return ", ".join(formatted_list)
     else:
         return ""
@@ -150,215 +159,212 @@ def format_name(name):
         return ""
     elif "," not in name:
         last = name.split(" ")[-1]
-        first = " ".join(name.split(" ")[0:-1])
+        first = " ".join(name.split(" ")[:-1])
         new_name = last + ", " + first
         return new_name
     else:
         return name
 
 
-# get metadata from the openneuro API
-datasets = get_openneuro_datasets()
-len(datasets)
+def main():
 
-# get metadata into a format suitable to generate a data frame
-
-output = []
-
-for accession_Number, y in datasets.items():
-    Dataset_made_public_datetime = datetime.strptime(
-        y["node"]["publishDate"][:10], date_input_format
-    )
-    Dataset_URL = os.path.join(
-        "https://openneuro.org/datasets/",
-        accession_Number,
-        "versions",
-        y["node"]["latestSnapshot"]["tag"],
-    )
-    Dataset_name = y["node"]["latestSnapshot"]["dataset"]["name"]
-    Dataset_made_public = Dataset_made_public_datetime.strftime(date_output_format)
-    Most_recent_snapshot_date = datetime.strptime(
-        y["node"]["latestSnapshot"]["dataset"]["publishDate"][:10],
-        date_input_format,
-    ).strftime(date_output_format)
-    if y["node"]["latestSnapshot"]["summary"] is not None:
-        Number_of_subjects = len(y["node"]["latestSnapshot"]["summary"]["subjects"])
-        Modalities_available = format_modalities(
-            y["node"]["latestSnapshot"]["summary"]["secondaryModalities"]
-            + y["node"]["latestSnapshot"]["summary"]["modalities"]
-        )
-        Ages = format_ages(y["node"]["latestSnapshot"]["summary"]["subjectMetadata"])
-        Tasks_completed = ", ".join(y["node"]["latestSnapshot"]["summary"]["tasks"])
+    # get metadata from the openneuro API
+    if UPDATE or not (TMP_DIR / "datasets.json").exists():
+        datasets = get_openneuro_datasets()
+        if UPDATE:
+            with open(TMP_DIR / "datasets.json", "w") as f:
+                json.dump(datasets, f, indent=4)
     else:
-        Number_of_subjects = None
-        Modalities_available = None
-        Ages = None
-        Tasks_completed = None
+        with open(TMP_DIR / "datasets.json") as f:
+            datasets = json.load(f)
 
-    if y["node"]["latestSnapshot"]["dataset"]["metadata"] is not None:
-        DX_status = y["node"]["latestSnapshot"]["dataset"]["metadata"]["dxStatus"]
-        Number_of_trials = y["node"]["latestSnapshot"]["dataset"]["metadata"]["trialCount"]
-        Study_design = y["node"]["latestSnapshot"]["dataset"]["metadata"]["studyDesign"]
-        Domain_studied = y["node"]["latestSnapshot"]["dataset"]["metadata"]["studyDomain"]
-        Longitudinal = (
-            "Yes"
-            if y["node"]["latestSnapshot"]["dataset"]["metadata"]["studyLongitudinal"]
-            == "Longitudinal"
-            else "No"
-        )
-        Processed_data = (
-            "Yes" if y["node"]["latestSnapshot"]["dataset"]["metadata"]["dataProcessed"] else "No"
-        )
-        Species = y["node"]["latestSnapshot"]["dataset"]["metadata"]["species"]
-        DOI_of_paper_associated_with_DS = y["node"]["latestSnapshot"]["dataset"]["metadata"][
-            "associatedPaperDOI"
-        ]
-        DOI_of_paper_because_DS_on_OpenNeuro = y["node"]["latestSnapshot"]["dataset"]["metadata"][
-            "openneuroPaperDOI"
-        ]
-    else:
-        DX_status = ""
-        Number_of_trials = ""
-        Study_design = ""
-        Domain_studied = ""
-        Longitudinal = ""
-        Processed_data = ""
-        Species = ""
-        DOI_of_paper_associated_with_DS = ""
-        DOI_of_paper_because_DS_on_OpenNeuro = ""
+    # get metadata into a format suitable to generate a dataframe
+    output = []
 
-    Senior_Author = format_name(y["node"]["latestSnapshot"]["description"]["SeniorAuthor"])
-    line_raw = [
-        accession_Number,
-        Dataset_URL,
-        Dataset_name,
-        Dataset_made_public,
-        Most_recent_snapshot_date,
-        Number_of_subjects,
-        Modalities_available,
-        DX_status,
-        Ages,
-        Tasks_completed,
-        Number_of_trials,
-        Study_design,
-        Domain_studied,
-        Longitudinal,
-        Processed_data,
-        Species,
-        DOI_of_paper_associated_with_DS,
-        DOI_of_paper_because_DS_on_OpenNeuro,
-        Senior_Author,
+    for accession_Number, y in datasets.items():
+        Dataset_made_public_datetime = datetime.strptime(
+            y["node"]["publishDate"][:10], date_input_format
+        )
+        Dataset_URL = os.path.join(
+            "https://openneuro.org/datasets/",
+            accession_Number,
+            "versions",
+            y["node"]["latestSnapshot"]["tag"],
+        )
+        Dataset_name = y["node"]["latestSnapshot"]["dataset"]["name"]
+        Dataset_made_public = Dataset_made_public_datetime.strftime(date_output_format)
+        Most_recent_snapshot_date = datetime.strptime(
+            y["node"]["latestSnapshot"]["dataset"]["publishDate"][:10],
+            date_input_format,
+        ).strftime(date_output_format)
+        if y["node"]["latestSnapshot"]["summary"] is not None:
+            Number_of_subjects = len(y["node"]["latestSnapshot"]["summary"]["subjects"])
+            Modalities_available = format_modalities(
+                y["node"]["latestSnapshot"]["summary"]["secondaryModalities"]
+                + y["node"]["latestSnapshot"]["summary"]["modalities"]
+            )
+            Ages = format_ages(y["node"]["latestSnapshot"]["summary"]["subjectMetadata"])
+            Tasks_completed = ", ".join(y["node"]["latestSnapshot"]["summary"]["tasks"])
+        else:
+            Number_of_subjects = None
+            Modalities_available = None
+            Ages = None
+            Tasks_completed = None
+
+        if y["node"]["latestSnapshot"]["dataset"]["metadata"] is not None:
+            DX_status = y["node"]["latestSnapshot"]["dataset"]["metadata"]["dxStatus"]
+            Number_of_trials = y["node"]["latestSnapshot"]["dataset"]["metadata"]["trialCount"]
+            Study_design = y["node"]["latestSnapshot"]["dataset"]["metadata"]["studyDesign"]
+            Domain_studied = y["node"]["latestSnapshot"]["dataset"]["metadata"]["studyDomain"]
+            Longitudinal = (
+                "Yes"
+                if y["node"]["latestSnapshot"]["dataset"]["metadata"]["studyLongitudinal"]
+                == "Longitudinal"
+                else "No"
+            )
+            Processed_data = (
+                "Yes"
+                if y["node"]["latestSnapshot"]["dataset"]["metadata"]["dataProcessed"]
+                else "No"
+            )
+            Species = y["node"]["latestSnapshot"]["dataset"]["metadata"]["species"]
+            DOI_of_paper_associated_with_DS = y["node"]["latestSnapshot"]["dataset"]["metadata"][
+                "associatedPaperDOI"
+            ]
+            DOI_of_paper_because_DS_on_OpenNeuro = y["node"]["latestSnapshot"]["dataset"][
+                "metadata"
+            ]["openneuroPaperDOI"]
+        else:
+            DX_status = ""
+            Number_of_trials = ""
+            Study_design = ""
+            Domain_studied = ""
+            Longitudinal = ""
+            Processed_data = ""
+            Species = ""
+            DOI_of_paper_associated_with_DS = ""
+            DOI_of_paper_because_DS_on_OpenNeuro = ""
+
+        Senior_Author = format_name(y["node"]["latestSnapshot"]["description"]["SeniorAuthor"])
+        line_raw = [
+            accession_Number,
+            Dataset_URL,
+            Dataset_name,
+            Dataset_made_public,
+            Most_recent_snapshot_date,
+            Number_of_subjects,
+            Modalities_available,
+            DX_status,
+            Ages,
+            Tasks_completed,
+            Number_of_trials,
+            Study_design,
+            Domain_studied,
+            Longitudinal,
+            Processed_data,
+            Species,
+            DOI_of_paper_associated_with_DS,
+            DOI_of_paper_because_DS_on_OpenNeuro,
+            Senior_Author,
+        ]
+        line = ["" if x is None else str(x) for x in line_raw]
+        output.append(line)
+
+    # create data frame
+    colnames = [
+        "AccessionNumber",
+        "Dataset URL",
+        "Dataset name",
+        "ReleaseDate",
+        "Most recent snapshot date (MM/DD/YYYY)",
+        "NSubjects",
+        "Modalities",
+        "DX status(es)",
+        "Ages (range)",
+        "Tasks completed?",
+        "# of trials (if applicable)",
+        "Study design",
+        "Domain studied",
+        "Longitudinal?",
+        "Processed data?",
+        "Species",
+        "DOI of paper associated with DS (from submitter lab)",
+        "DOI of paper because DS on OpenNeuro",
+        "Senior Author (lab that collected data) Last, First",
     ]
-    line = ["" if x is None else str(x) for x in line_raw]
-    output.append(line)
 
-# create data frame
-colnames = [
-    "AccessionNumber",
-    "Dataset URL",
-    "Dataset name",
-    "ReleaseDate",
-    "Most recent snapshot date (MM/DD/YYYY)",
-    "NSubjects",
-    "Modalities",
-    "DX status(es)",
-    "Ages (range)",
-    "Tasks completed?",
-    "# of trials (if applicable)",
-    "Study design",
-    "Domain studied",
-    "Longitudinal?",
-    "Processed data?",
-    "Species",
-    "DOI of paper associated with DS (from submitter lab)",
-    "DOI of paper because DS on OpenNeuro",
-    "Senior Author (lab that collected data) Last, First",
-]
+    metadata = pd.DataFrame(output, columns=colnames)
+    metadata["NSubjects"] = [None if i == "" else int(i) for i in metadata["NSubjects"]]
+    metadata["ReleaseDate"] = pd.to_datetime(metadata["ReleaseDate"])
 
-metadata = pd.DataFrame(output, columns=colnames)
-metadata["NSubjects"] = [None if i == "" else int(i) for i in metadata["NSubjects"]]
-metadata["ReleaseDate"] = pd.to_datetime(metadata["ReleaseDate"])
+    # Clean up data to create plots
+    df_sorted = metadata.sort_values("ReleaseDate")
+    df_sorted["ones"] = 1
+    df_sorted["cumulative"] = df_sorted["ones"].cumsum()
+    df_sorted["cumulative_subjects"] = df_sorted["NSubjects"].cumsum()
+    dates = df_sorted["ReleaseDate"].unique()
+
+    print("Earliest dataset:", dates.min())
+    print("Latest dataset:", dates.max())
+
+    # fix dates to reflect fact that early datasets were all from openneuro
+    # df_sorted.loc[df_sorted['ReleaseDate'] < pd.Timestamp(2018,8,1), 'ReleaseDate'] = '2018-08-01'
+    # df_sorted
+
+    datasets = defaultdict(int)
+    subjects = defaultdict(int)
+
+    for date, nsub in metadata[["ReleaseDate", "NSubjects"]].values:
+        datasets[date.strftime("%Y-%m-%d")] += 1
+        subjects[date.strftime("%Y-%m-%d")] += nsub
+
+    datadict = defaultdict(list)
+    for k in datasets.keys():
+        datadict["ReleaseDate"].append(k)
+        datadict["n_datasets"].append(datasets[k])
+        datadict["n_subjects"].append(subjects[k])
+
+    df_plotting = pd.DataFrame(datadict)
+    df_plotting["ReleaseDate"] = pd.to_datetime(df_plotting["ReleaseDate"])
+    df_plotting = df_plotting.set_index("ReleaseDate").sort_values(by="ReleaseDate")
+
+    df_plotting["cumsum_datasets"] = df_plotting["n_datasets"].cumsum()
+    df_plotting["cumsum_subjects"] = df_plotting["n_subjects"].cumsum()
+
+    release_dates = df_plotting.index.astype(int)
+
+    df_plotting.to_csv(TMP_DIR / "df.tsv", sep="\t", index=False)
+
+    # end_year = 24  # set to current year + 1
+    # # July 2 is the midpoint of year
+    # midyears = pd.to_datetime([f"20{yr}-07-02" for yr in range(18, end_year)]).astype(int)
+    # midyears
+
+    release_datetimes = pd.to_datetime(release_dates)
+
+    fig = make_subplots(specs=[[{"secondary_y": True}]])
+    for col in ["cumsum_datasets", "cumsum_subjects"]:
+        secondary_y = False
+        if col == "cumsum_subjects":
+            secondary_y = True
+
+        fig.add_trace(
+            go.Scatter(
+                name=col.replace("cumsum_", ""),
+                x=release_datetimes,
+                y=df_plotting[col],
+                mode="lines",
+            ),
+            secondary_y=secondary_y,
+        )
+    fig.update_layout(title="Openneuro data growth", hovermode="x")
+    fig.update_yaxes(title_text="Cumulative datasets", secondary_y=False, nticks=10)
+    fig.update_yaxes(title_text="Cumulative subjects", secondary_y=True, nticks=10)
+    fig.update_xaxes(title_text="date")
+
+    # fig.write_html(Path(__file__).parent / ".." / "images" / "openneuro_data_growth.html")
+    fig.write_image(Path(__file__).parent / ".." / "images" / "openneuro_data_growth.png")
 
 
-# Clean up data to create plots
-df_sorted = metadata.sort_values("ReleaseDate")
-df_sorted["ones"] = 1
-df_sorted["cumulative"] = df_sorted["ones"].cumsum()
-df_sorted["cumulative_subjects"] = df_sorted["NSubjects"].cumsum()
-dates = df_sorted["ReleaseDate"].unique()
-print("Earliest dataset:", dates.min())
-print("Latest dataset:", dates.max())
-
-# fix dates to reflect fact that early datasets were all from openneuro
-# df_sorted.loc[df_sorted['ReleaseDate'] < pd.Timestamp(2018,8,1), 'ReleaseDate'] = '2018-08-01'
-# df_sorted
-
-datasets = defaultdict(int)
-subjects = defaultdict(int)
-
-for date, nsub in metadata[["ReleaseDate", "NSubjects"]].values:
-    datasets[date.strftime("%Y-%m-%d")] += 1
-    subjects[date.strftime("%Y-%m-%d")] += nsub
-
-datadict = defaultdict(list)
-for k in datasets.keys():
-    datadict["ReleaseDate"].append(k)
-    datadict["n_datasets"].append(datasets[k])
-    datadict["n_subjects"].append(subjects[k])
-
-df_plotting = pd.DataFrame(datadict)
-df_plotting["ReleaseDate"] = pd.to_datetime(df_plotting["ReleaseDate"])
-df_plotting = df_plotting.set_index("ReleaseDate").sort_values(by="ReleaseDate")
-
-df_plotting["cumsum_datasets"] = df_plotting["n_datasets"].cumsum()
-df_plotting["cumsum_subjects"] = df_plotting["n_subjects"].cumsum()
-
-release_dates = df_plotting.index.astype(int)
-
-# end_year = 24  # set to current year + 1
-# # July 2 is the midpoint of year
-# midyears = pd.to_datetime([f"20{yr}-07-02" for yr in range(18, end_year)]).astype(int)
-# midyears
-
-
-# individual plots for openneuro and mriqc
-sns.set(font_scale=1.5)
-sns.set_style("whitegrid")
-
-fig, ax = plt.subplots(figsize=(10, 6))
-# plot datasets
-color = "tab:green"
-ax.set_xlabel("Date")
-ax.set_ylabel("Cumulative datasets")
-release_datetimes = pd.to_datetime(release_dates)
-line1 = sns.lineplot(
-    x=release_datetimes,
-    y=df_plotting["cumsum_datasets"],
-    color=color,
-    label="Datasets",
-    linewidth=3.2,
-    ax=ax,
-    legend=None,
-)
-# Plot Subjects
-right_axis = ax.twinx()
-right_axis.set_ylabel("Cumulative subjects")
-color = "tab:red"
-line2 = sns.lineplot(
-    x=release_datetimes,
-    y=df_plotting["cumsum_subjects"],
-    color=color,
-    label="Subjects",
-    linewidth=3.2,
-    ax=right_axis,
-    legend=None,
-)
-
-# Create the legend with the lines and labels
-lines, labels = ax.get_legend_handles_labels()
-lines2, labels2 = right_axis.get_legend_handles_labels()
-ax.legend(lines + lines2, labels + labels2, loc=0)
-ax.set_title("Openneuro data growth")
-plt.tight_layout()
-
-plt.savefig("figure2a.png", dpi=300)
+if __name__ == "__main__":
+    main()

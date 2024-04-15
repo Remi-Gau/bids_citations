@@ -5,4 +5,5 @@ requests_mock
 ruamel.yaml
 pyzotero
 gender_guesser
-seaborn
+plotly
+pandas

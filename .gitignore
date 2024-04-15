@@ -1,6 +1,7 @@
 token.txt
 papers.json
 .ipynb_checkpoints
+tmp
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

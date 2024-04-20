@@ -36,7 +36,7 @@ weeks to complete.
 We kindly ask you to please **share your grant online** - successful or not.
 This will signal to the rest of the community what avenues we have pursued and
 what our fellow colleagues are planning on doing next. These can be grants that
-directly extend our support into a new domain, grants that help BIDS (e.g.
+directly extend our support into a new domain, grants that help BIDS (for example
 OpenNeuro), or unsuccessful grant applications. For example, please find our
 [NIH-R24 Brain Initiative BIDS-Derivatives grant](https://osf.io/c3dgx/).
 

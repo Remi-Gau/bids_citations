@@ -1,3 +1,8 @@
+---
+hide:
+  - navigation
+---
+
 # BIDS grant writing kit
 
 Adapted and extended from

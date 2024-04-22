@@ -5,9 +5,6 @@ hide:
 
 # BIDS grant writing kit
 
-Adapted and extended from
-[this google doc](https://docs.google.com/document/d/1Q7JTOvUqt05YQfnbvGoP1SZQy_CGkNEVcsVZeS4D5_o).
-
 This document intends to convey how the BIDS Steering and Maintainers Group can
 support your proposed BIDS grant. In an effort to express the impact of BIDS in
 the brain imaging community, we have shared several of our traffic metrics.
@@ -237,11 +234,6 @@ TODO add automation to update every 6 months
 As of July 1, 2020, we have 183 people signed up for our
 [BIDS email list](https://forms.gle/JFo2aEkYbKY4EbmE6) and 412 members on our
 [google group](https://groups.google.com/forum/#!forum/bids-discussion).
-
-## Recent news and events
-
-To find out about recent news and events, please visit our
-[news section](https://bids.neuroimaging.io/news.html) on the website.
 
 <!--
 ## Future steps: TODO

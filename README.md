@@ -1,6 +1,6 @@
 ---
 hide:
-  - navigation
+-   navigation
 ---
 
 # BIDS grant writing kit
@@ -18,9 +18,8 @@ tools, and collaboration.
 
 The respective leads are:
 
-- Stefan Appelhoff
-  ([stefan.appelhoff@mailbox.org](mailto:stefan.appelhoff@mailbox.org)),
-- Chris Markiewicz ([markiewicz@stanford.edu](mailto:markiewicz@stanford.edu))
+-   Stefan Appelhoff ([stefan.appelhoff@mailbox.org](mailto:stefan.appelhoff@mailbox.org)),
+-   Chris Markiewicz ([markiewicz@stanford.edu](mailto:markiewicz@stanford.edu))
 
 Our range of support covers activities such as: meeting with the Steering and
 Maintainers Groups to assisting with connecting you with other BIDS grant
@@ -119,12 +118,12 @@ we have over 300 credited contributors.
 
 Guessed with: https://pypi.org/project/gender-guesser/
 
-- male: 177
-- female: 47
-- andy: 6
-- unknown: 80
-- mostly_male: 13
-- mostly_female: 2
+-   male: 177
+-   female: 47
+-   andy: 6
+-   unknown: 80
+-   mostly_male: 13
+-   mostly_female: 2
 
 #### Contributors affiliations
 
@@ -177,8 +176,8 @@ we utilize Google Analytics.
 
 For visualizing our metrics, we have put together 2 dashboards:
 
-1. [the website](https://datastudio.google.com/u/0/reporting/eab164ba-9f98-46e8-bee8-1f4f5328dc6e/page/V5leB)
-2. [the specification](https://datastudio.google.com/u/0/reporting/57bf46f1-034c-4d8b-9fe2-3a2243e469c5/page/w1leB)
+1.  [the website](https://datastudio.google.com/u/0/reporting/eab164ba-9f98-46e8-bee8-1f4f5328dc6e/page/V5leB)
+1.  [the specification](https://datastudio.google.com/u/0/reporting/57bf46f1-034c-4d8b-9fe2-3a2243e469c5/page/w1leB)
 
 The default time period is set to the past 6 months. This can be changed by
 adjusting the time period in the upper left corner. Please feel free to use any

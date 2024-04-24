@@ -1,7 +1,9 @@
-# BIDS grant writing kit
+---
+hide:
+-   navigation
+---
 
-Adapted and extended from
-[this google doc](https://docs.google.com/document/d/1Q7JTOvUqt05YQfnbvGoP1SZQy_CGkNEVcsVZeS4D5_o).
+# BIDS grant writing kit
 
 This document intends to convey how the BIDS Steering and Maintainers Group can
 support your proposed BIDS grant. In an effort to express the impact of BIDS in
@@ -16,9 +18,8 @@ tools, and collaboration.
 
 The respective leads are:
 
-- Stefan Appelhoff
-  ([stefan.appelhoff@mailbox.org](mailto:stefan.appelhoff@mailbox.org)),
-- Chris Markiewicz ([markiewicz@stanford.edu](mailto:markiewicz@stanford.edu))
+-   Stefan Appelhoff ([stefan.appelhoff@mailbox.org](mailto:stefan.appelhoff@mailbox.org)),
+-   Chris Markiewicz ([markiewicz@stanford.edu](mailto:markiewicz@stanford.edu))
 
 Our range of support covers activities such as: meeting with the Steering and
 Maintainers Groups to assisting with connecting you with other BIDS grant
@@ -36,7 +37,7 @@ weeks to complete.
 We kindly ask you to please **share your grant online** - successful or not.
 This will signal to the rest of the community what avenues we have pursued and
 what our fellow colleagues are planning on doing next. These can be grants that
-directly extend our support into a new domain, grants that help BIDS (e.g.
+directly extend our support into a new domain, grants that help BIDS (for example
 OpenNeuro), or unsuccessful grant applications. For example, please find our
 [NIH-R24 Brain Initiative BIDS-Derivatives grant](https://osf.io/c3dgx/).
 
@@ -117,12 +118,12 @@ we have over 300 credited contributors.
 
 Guessed with: https://pypi.org/project/gender-guesser/
 
-- male: 177
-- female: 47
-- andy: 6
-- unknown: 80
-- mostly_male: 13
-- mostly_female: 2
+-   male: 177
+-   female: 47
+-   andy: 6
+-   unknown: 80
+-   mostly_male: 13
+-   mostly_female: 2
 
 #### Contributors affiliations
 
@@ -175,8 +176,8 @@ we utilize Google Analytics.
 
 For visualizing our metrics, we have put together 2 dashboards:
 
-1. [the website](https://datastudio.google.com/u/0/reporting/eab164ba-9f98-46e8-bee8-1f4f5328dc6e/page/V5leB)
-2. [the specification](https://datastudio.google.com/u/0/reporting/57bf46f1-034c-4d8b-9fe2-3a2243e469c5/page/w1leB)
+1.  [the website](https://datastudio.google.com/u/0/reporting/eab164ba-9f98-46e8-bee8-1f4f5328dc6e/page/V5leB)
+1.  [the specification](https://datastudio.google.com/u/0/reporting/57bf46f1-034c-4d8b-9fe2-3a2243e469c5/page/w1leB)
 
 The default time period is set to the past 6 months. This can be changed by
 adjusting the time period in the upper left corner. Please feel free to use any
@@ -232,11 +233,6 @@ TODO add automation to update every 6 months
 As of July 1, 2020, we have 183 people signed up for our
 [BIDS email list](https://forms.gle/JFo2aEkYbKY4EbmE6) and 412 members on our
 [google group](https://groups.google.com/forum/#!forum/bids-discussion).
-
-## Recent news and events
-
-To find out about recent news and events, please visit our
-[news section](https://bids.neuroimaging.io/news.html) on the website.
 
 <!--
 ## Future steps: TODO

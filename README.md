@@ -1,1 +1,2 @@
-moved to docs/grant_writing_kit.md
+moved to
+[the new website](https://bids-website.readthedocs.io/en/latest/grant-writing-kit.html)

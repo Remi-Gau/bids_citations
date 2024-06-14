@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ---
 hide:
 -   navigation
@@ -245,3 +246,6 @@ As of July 1, 2020, we have 183 people signed up for our
 - Sharing previous BIDS grants: when the organizational design is completed, we
   can establish a common area to place this information.
 -->
+=======
+moved to [the new website](https://bids-website.readthedocs.io/en/latest/grant-writing-kit.html)
+>>>>>>> bfm
